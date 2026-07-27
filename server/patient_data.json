@@ -1,0 +1,97 @@
+{
+  "users": [
+    {
+      "username": "user",
+      "password": "1234"
+    }
+  ],
+  "records": [
+    {
+      "date": "14/10/2025, 9:14:59 pm",
+      "systolic": 82,
+      "diastolic": 88,
+      "pulse": 96,
+      "result": "High"
+    },
+    {
+      "date": "14/10/2025, 9:17:15 pm",
+      "systolic": 86,
+      "diastolic": 77,
+      "pulse": 87,
+      "result": "Low"
+    },
+    {
+      "date": "14/10/2025, 9:17:30 pm",
+      "systolic": 86,
+      "diastolic": 77,
+      "pulse": 87,
+      "result": "Low"
+    },
+    {
+      "date": "14/10/2025, 9:20:16 pm",
+      "systolic": 85,
+      "diastolic": 82,
+      "pulse": 90,
+      "result": "Low"
+    },
+    {
+      "date": "14/10/2025, 9:48:52 pm",
+      "systolic": 87,
+      "diastolic": 84,
+      "pulse": 92,
+      "result": "Low"
+    },
+    {
+      "date": "14/10/2025, 9:48:56 pm",
+      "systolic": 87,
+      "diastolic": 84,
+      "pulse": 92,
+      "result": "Low"
+    },
+    {
+      "date": "16/10/2025, 11:34:31 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    },
+    {
+      "date": "16/10/2025, 11:34:33 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    },
+    {
+      "date": "16/10/2025, 11:34:36 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    },
+    {
+      "date": "16/10/2025, 11:34:37 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    },
+    {
+      "date": "16/10/2025, 11:34:56 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    },
+    {
+      "date": "16/10/2025, 11:34:56 am",
+      "systolic": 112,
+      "diastolic": 76,
+      "pulse": 79,
+      "result": "Normal"
+    }
+  ],
+  "profile": {
+    "email": "abi@gmail.com"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "jeevi": {
+    "password": "jeevi@123",
+    "profile": {
+      "patientName": "ram",
+      "doctorEmail": "john@gmail.com"
+    }
+  },
+  "Jeevi123": {
+    "password": "Jeevi123",
+    "profile": {
+      "patientName": "ram",
+      "doctorEmail": "john@gmail.com"
+    }
+  },
+  "_Jeevi123": {
+    "password": "Jeevi@123",
+    "profile": {
+      "patientName": "ram",
+      "doctorEmail": "john@gmail.com"
+    }
+  },
+  "_Abi123": {
+    "password": "Abi@123",
+    "profile": {
+      "patientName": "ram",
+      "doctorEmail": "john@gmail.com"
+    }
+  }
+}

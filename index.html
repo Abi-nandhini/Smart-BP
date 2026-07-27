@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart BP App</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0; padding: 0;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    color: white; padding: 25px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  header h1 { font-size: 2.5em; margin: 0; letter-spacing: 1px; }
+  header h2 { font-size: 1.2em; margin-top: 8px; color: #ffe600; }
+
+  nav {
+    background-color: #333;
+    padding: 10px 0; text-align: center; display: none;
+  }
+  nav a {
+    color: white; text-decoration: none; margin: 0 15px;
+    font-size: 1.1em; cursor: pointer; transition: .3s;
+  }
+  nav a:hover { color: #00d2ff; }
+
+  main { padding: 20px; text-align: center; }
+  .page { display: none; }
+  .active { display: block; }
+
+  .login-container {
+    max-width: 400px; margin: 80px auto;
+    background: white; padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .login-container h2 {
+    color: #3a7bd5; margin-bottom: 20px;
+    font-size: 1.8em;
+  }
+  .login-container input {
+    width: 90%; padding: 12px;
+    margin: 10px 0; border: 1px solid #ccc;
+    border-radius: 8px; font-size: 1em;
+  }
+  .login-container button {
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    color: white; border: none; border-radius: 8px;
+    padding: 12px 30px; font-size: 1.1em; cursor: pointer;
+    margin-top: 10px; transition: 0.3s;
+  }
+  .login-container button:hover { transform: scale(1.05); }
+  .error-msg { color: red; margin-top: 10px; font-weight: bold; }
+
+  .input-section {
+    margin: 20px auto; max-width: 400px;
+    background: white; padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  label { display: block; margin: 10px 0; font-size: 1.1em; font-weight: bold; }
+  input[type=number] {
+    width: 100%; padding: 10px; margin-bottom: 15px;
+    border: 1px solid #ccc; border-radius: 5px; font-size: 1em;
+  }
+  .button-section { margin: 20px 0; }
+  button {
+    padding: 10px 20px; font-size: 1.1em;
+    border: none; border-radius: 5px; cursor: pointer;
+    color: white; margin: 5px; transition: .3s;
+  }
+  #saveBtn { background-color: #4CAF50; }
+  #calculateBtn { background-color: #2196F3; }
+  button:hover { opacity: .8; }
+  .result-section {
+    margin-top: 25px; font-size: 1.4em;
+    font-weight: bold; color: red;
+  }
+
+  .history-item {
+    background: white; padding: 15px; border-radius: 10px;
+    margin: 10px auto; max-width: 500px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left;
+  }
+  .history-item h3 { margin: 5px 0; color: #2196F3; }
+
+  .insight-box {
+    max-width: 700px; margin: 20px auto; background: #f0f8ff;
+    padding: 20px; border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    text-align: left;
+  }
+  .insight-box h2 { text-align: center; color: #3a7bd5; margin-bottom: 15px; }
+  canvas { background: #ffffff; border-radius: 10px; }
+
+  .profile-section {
+    max-width: 700px; margin: 20px auto; background: white;
+    padding: 20px; border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+  .profile-section h2 { color: #3a7bd5; margin-bottom: 15px; }
+  .profile-item { margin: 10px 0; font-size: 1.1em; }
+  .edit-btn {
+    background: #2196F3; padding: 10px 20px;
+    color: white; border: none; border-radius: 5px;
+    cursor: pointer; margin-top: 15px;
+  }
+  .edit-btn:hover { opacity: .8; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Smart BP</h1>
+  <h2>Monitor Your Health Easily 💙</h2>
+</header>
+
+<div id="loginPage" class="login-container">
+  <h2>Welcome to Smart BP</h2>
+  <p style="color:#555;">Please log in to continue</p>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div id="error" class="error-msg"></div>
+</div>
+
+<nav id="navBar">
+  <a onclick="showPage('home')">Home</a>
+  <a onclick="showPage('history')">History</a>
+  <a onclick="showPage('insights')">Insights</a>
+  <a onclick="showPage('profile')">Profile</a>
+</nav>
+
+<main id="mainContent" style="display:none;">
+  <div id="home" class="page active">
+    <div class="input-section">
+      <label>Systolic (mmHg):</label>
+      <input type="number" id="systolic">
+      <label>Diastolic (mmHg):</label>
+      <input type="number" id="diastolic">
+      <label>Pulse (bpm):</label>
+      <input type="number" id="pulse">
+      <label>Weight (kg):</label>
+      <input type="number" id="weight">
+      <div class="button-section">
+        <button id="saveBtn">SAVE</button>
+        <button id="calculateBtn">CALCULATE</button>
+      </div>
+      <div id="result" class="result-section"></div>
+    </div>
+  </div>
+
+  <div id="history" class="page">
+    <h2>Your BP History</h2>
+    <div id="historyList"></div>
+  </div>
+
+  <div id="insights" class="page">
+    <div class="insight-box" id="insightBox">
+      <h2>Blood Pressure & Pulse Report</h2>
+      <p id="reportSummary" style="text-align:center; font-weight:bold;"></p>
+      <canvas id="bpChart" height="300"></canvas>
+      <div style="text-align:right; margin-top:15px;">
+        <button id="exportPDFBtn" style="background:#ff5733; padding:10px 20px; color:white; border:none; border-radius:5px; cursor:pointer;">Export to PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="profile" class="page">
+    <div class="profile-section">
+      <h2>👤 User Profile</h2>
+      <img src="https://via.placeholder.com/100" style="border-radius:50%; margin-bottom:15px;">
+      <div class="profile-item"><strong>Name:</strong> <span id="profileName">John Doe</span></div>
+      <div class="profile-item"><strong>Age:</strong> 28</div>
+      <div class="profile-item"><strong>Gender:</strong> Female</div>
+      <div class="profile-item"><strong>Height:</strong> 165 cm</div>
+      <div class="profile-item"><strong>Weight:</strong> 65 kg</div>
+      <button class="edit-btn">Edit Profile</button>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const error = document.getElementById('error');
+  if (username === "user" && password === "1234") {
+    localStorage.setItem("loggedInUser", username);
+    document.getElementById('loginPage').style.display = "none";
+    document.getElementById('navBar').style.display = "block";
+    document.getElementById('mainContent').style.display = "block";
+    document.getElementById('profileName').textContent = username;
+  } else {
+    error.textContent = "❌ Invalid username or password";
+  }
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'history') loadHistory();
+  if (id === 'insights') loadInsightsChart();
+}
+
+function saveReading() {
+  const s = document.getElementById('systolic').value;
+  const d = document.getElementById('diastolic').value;
+  const p = document.getElementById('pulse').value;
+  const w = document.getElementById('weight').value;
+  if (!s || !d || !p || !w) { alert("⚠ Fill all fields"); return null; }
+  const r = { date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), systolic: s, diastolic: d, pulse: p, weight: w };
+  let h = JSON.parse(localStorage.getItem('bpHistory')) || [];
+  h.push(r); localStorage.setItem('bpHistory', JSON.stringify(h)); return r;
+}
+
+document.getElementById('calculateBtn').addEventListener('click', () => {
+  const s = parseInt(document.getElementById('systolic').value);
+  const d = parseInt(document.getElementById('diastolic').value);
+  const res = document.getElementById('result');
+  if (isNaN(s) || isNaN(d)) { res.textContent = 'Please enter valid BP values'; res.style.color = 'orange'; return; }
+  saveReading();
+  if (s < 120 && d < 80) { res.textContent = 'Your BP is Normal 💚'; res.style.color = 'green'; }
+  else { res.textContent = 'Your BP is Not Normal 💔'; res.style.color = 'red'; }
+  ['systolic','diastolic','pulse','weight'].forEach(i => document.getElementById(i).value = "");
+});
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const r = saveReading(); if (r) alert("✅ BP Record Saved!");
+  ['systolic','diastolic','pulse','weight'].forEach(i => document.getElementById(i).value = "");
+});
+
+function loadHistory() {
+  const list = document.getElementById('historyList');
+  let h = JSON.parse(localStorage.getItem('bpHistory')) || [];
+  if (h.length === 0) { list.innerHTML = "<p>No history yet.</p>"; return; }
+  list.innerHTML = "";
+  h.slice(-50).reverse().forEach(i => {
+    const d = document.createElement('div'); d.classList.add('history-item');
+    d.innerHTML = `<h3>${i.date} — ${i.time}</h3>
+      <p><strong>BP:</strong> ${i.systolic}/${i.diastolic} mmHg</p>
+      <p><strong>Pulse:</strong> ${i.pulse} bpm</p>
+      <p><strong>Weight:</strong> ${i.weight} kg</p>`;
+    list.appendChild(d);
+  });
+}
+
+let bpChart;
+function loadInsightsChart() {
+  const h = JSON.parse(localStorage.getItem('bpHistory')) || [];
+  const labels = h.map(r => r.date + ' ' + r.time);
+  const sys = h.map(r => r.systolic);
+  const dia = h.map(r => r.diastolic);
+  const pulse = h.map(r => r.pulse);
+  const ctx = document.getElementById('bpChart').getContext('2d');
+  if (bpChart) bpChart.destroy();
+  bpChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: [
+      { label: 'Systolic', data: sys, borderColor: '#ff5733', tension: 0.3 },
+      { label: 'Diastolic', data: dia, borderColor: '#33c4ff', tension: 0.3 },
+      { label: 'Pulse', data: pulse, borderColor: '#ff33f6', tension: 0.3 }
+    ]},
+    options: { responsive: true, plugins: { legend: { position: 'top' } } }
+  });
+}
+
+// ✅ WORKING EXPORT TO PDF FEATURE
+document.getElementById('exportPDFBtn').addEventListener('click', async () => {
+  const { jsPDF } = window.jspdf;
+  const insightBox = document.getElementById('insightBox');
+  const canvas = await html2canvas(insightBox, { scale: 2 });
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const width = pdf.internal.pageSize.getWidth();
+  const height = (canvas.height * width) / canvas.width;
+  pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+  pdf.save('SmartBP_Report.pdf');
+  alert('✅ PDF exported successfully!');
+});
+</script>
+</body>
+</html>
